@@ -28,6 +28,7 @@ function saveProduct(event) {
     // Adiciona o novo produto ao array
     products.push(product);
 
+
     // Salva o array atualizado no localStorage
     localStorage.setItem('products', JSON.stringify(products));
 
@@ -62,6 +63,28 @@ function displayProducts() {
     productsContainer.appendChild(productCard);
   });
 }
+
+// Se não houver produtos no localStorage, adiciona os predefinidos
+if (products.length === 0) {
+  const defaultProducts = [
+    {
+      name: "Produto Exemplo 1",
+      price: 50,
+      image: "https://via.placeholder.com/200x150.png?text=Produto+1",
+    },
+    {
+      name: "Produto Exemplo 2",
+      price: 100,
+      image: "https://via.placeholder.com/200x150.png?text=Produto+2",
+    },
+    {
+      name: "Produto Exemplo 3",
+      price: 150,
+      image: "https://via.placeholder.com/200x150.png?text=Produto+3",
+    }
+  ];
+}
+
 // Verifica se o número de produtos é maior que 4
 if (products.length > 4) {
   productsContainer.classList.add('scrollable');
