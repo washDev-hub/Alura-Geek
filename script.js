@@ -5,8 +5,11 @@ const priceInput = document.getElementById('price');
 const imageInput = document.getElementById('image');
 const productsContainer = document.getElementById('products');
 
-// Função para salvar os produtos no localStorage
-function saveProduct(event) {
+// URL base da API
+const API_URL = 'http://localhost:3000/products';
+
+// Função para salvar os produtos na API
+async function saveProduct(event) {
   event.preventDefault();
 
   // Obtém os dados do formulário
@@ -22,84 +25,86 @@ function saveProduct(event) {
       image,
     };
 
-    // Recupera os produtos existentes do localStorage
-    const products = JSON.parse(localStorage.getItem('products')) || [];
+    try {
+      // Envia o produto para a API
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+      });
 
-    // Adiciona o novo produto ao array
-    products.push(product);
+      // Atualiza a lista de produtos na página
+      displayProducts();
 
-
-    // Salva o array atualizado no localStorage
-    localStorage.setItem('products', JSON.stringify(products));
-
-    // Atualiza a lista de produtos na página
-    displayProducts();
-    
-    // Limpa o formulário
-    productForm.reset();
+      // Limpa o formulário
+      productForm.reset();
+    } catch (error) {
+      console.error('Erro ao salvar o produto:', error);
+    }
   }
 }
 
 // Função para exibir os produtos na página
-function displayProducts() {
-  // Recupera os produtos do localStorage
-  const products = JSON.parse(localStorage.getItem('products')) || [];
-  
-  // Limpa o contêiner de produtos antes de renderizar
-  productsContainer.innerHTML = '';
+async function displayProducts() {
+  try {
+    // Obtém os produtos da API
+    const response = await fetch(API_URL);
+    const products = await response.json();
 
-  // Adiciona os produtos ao HTML
-  products.forEach(product => {
-    const productCard = document.createElement('div');
-    productCard.classList.add('product-card');
+    // Limpa o contêiner de produtos antes de renderizar
+    productsContainer.innerHTML = '';
 
-    productCard.innerHTML = `
-      <img src="${product.image}" alt="${product.name}">
-      <h3>${product.name}</h3>
-      <p class="price">R$ ${product.price}</p>
-      <button class="delete-button" onclick="deleteProduct('${product.name}')">🗑️</button>
-    `;
+    // Adiciona os produtos ao HTML
+    products.forEach(product => {
+      const productCard = document.createElement('div');
+      productCard.classList.add('product-card');
 
-    productsContainer.appendChild(productCard);
-  });
-}
+      productCard.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p class="price">R$ ${product.price}</p>
+        <button class="delete-button" onclick="deleteProduct(${product.id})">🗑️</button>
+      `;
 
-// Se não houver produtos no localStorage, adiciona os predefinidos
-if (products.length === 0) {
-  const defaultProducts = [
-    {
-      name: "Produto Exemplo 1",
-      price: 50,
-      image: "https://via.placeholder.com/200x150.png?text=Produto+1",
-    },
-    {
-      name: "Produto Exemplo 2",
-      price: 100,
-      image: "https://via.placeholder.com/200x150.png?text=Produto+2",
-    },
-    {
-      name: "Produto Exemplo 3",
-      price: 150,
-      image: "https://via.placeholder.com/200x150.png?text=Produto+3",
+      productsContainer.appendChild(productCard);
+    });
+
+    // Verifica se o número de produtos é maior que 4
+    if (products.length > 4) {
+      productsContainer.classList.add('scrollable');
+    } else {
+      productsContainer.classList.remove('scrollable');
     }
-  ];
+  } catch (error) {
+    console.error('Erro ao exibir os produtos:', error);
+  }
 }
 
-// Verifica se o número de produtos é maior que 4
-if (products.length > 4) {
-  productsContainer.classList.add('scrollable');
-} else {
-  productsContainer.classList.remove('scrollable');
+// Função para excluir um produto
+async function deleteProduct(productId) {
+  try {
+    // Envia a requisição DELETE para a API
+    await fetch(`${API_URL}/${productId}`, {
+      method: 'DELETE',
+    });
+
+    // Atualiza a lista de produtos na página
+    displayProducts();
+  } catch (error) {
+    console.error('Erro ao excluir o produto:', error);
+  }
 }
 
 // Função para rolar suavemente para a esquerda
-document.getElementById('scroll-left').addEventListener('click', function() {
+document.getElementById('scroll-left').addEventListener('click', function () {
   const productsContainer = document.getElementById('products');
   smoothScroll(productsContainer, -380); // Ajuste a distância da rolagem
 });
 
 // Função para rolar suavemente para a direita
-document.getElementById('scroll-right').addEventListener('click', function() {
+document.getElementById('scroll-right').addEventListener('click', function () {
   const productsContainer = document.getElementById('products');
   smoothScroll(productsContainer, 380); // Ajuste a distância da rolagem
 });
@@ -125,22 +130,6 @@ function smoothScroll(element, distance) {
 
   // Inicia a animação da rolagem
   requestAnimationFrame(animateScroll);
-}
-
-
-// Função para excluir um produto
-function deleteProduct(productName) {
-  // Recupera os produtos
-  const products = JSON.parse(localStorage.getItem('products')) || [];
-
-  // Filtra o produto a ser removido
-  const updatedProducts = products.filter(product => product.name !== productName);
-
-  // Atualiza o localStorage com os produtos restantes
-  localStorage.setItem('products', JSON.stringify(updatedProducts));
-
-  // Atualiza a lista de produtos na página
-  displayProducts();
 }
 
 // Adiciona um ouvinte de evento para o formulário
