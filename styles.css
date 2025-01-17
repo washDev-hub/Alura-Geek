@@ -1,0 +1,702 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #57dbfc;
+  color: #333;
+  padding: 20px;
+}
+
+/* Cabeçalho */
+header {
+  background-color: #6a0dad;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100; /* Garante que o cabeçalho fique acima dos outros elementos */
+  transition: transform 0.3s ease; /* Para adicionar animações de transição */
+}
+
+header.hidden {
+  transform: translateY(-100%); /* Esconde o cabeçalho ao rolar para baixo */
+}
+
+
+header .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+header .logo span {
+  display: flex;
+  align-items: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Estilo do título "Meus Produtos" */
+.product-list h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4e148c;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.product-list h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #6a0dad, #4e148c);
+  margin: 10px auto 0 auto;
+  border-radius: 2px;
+  animation: growLine 0.5s ease-in-out;
+}
+
+@keyframes growLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60px;
+  }
+}
+
+/* Ajustes para a área principal */
+main {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 100vh; /* Garante que o main ocupe toda a altura da tela */
+  padding-right: 350px; /* Ajusta o espaço para acomodar a aba de adicionar produtos */
+}
+
+/* Container de produtos */
+.product-list {
+  flex-grow: 1; /* Faz com que a lista de produtos ocupe o espaço disponível */
+  overflow-y: auto; /* Adiciona rolagem vertical se os produtos ultrapassarem a altura */
+  padding-left: 50px; /* Para dar espaço à seta à esquerda */
+  padding-right: 50px; /* Para dar espaço à seta à direita */
+}
+
+.product-list h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilo do container de rolagem */
+.scroll-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  overflow: hidden; /* Impede que o conteúdo ultrapasse o contêiner */
+  padding: 0 50px; /* Adiciona espaçamento à esquerda e à direita para as setas */
+}
+
+/* Estilo das setas */
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #6a0dad, #8e44ad);
+  color: white;
+  font-size: 2rem;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+}
+
+.scroll-arrow:hover {
+  transform: translateY(-50%) scale(1.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #8e44ad, #6a0dad);
+}
+
+/* Garantindo o posicionamento correto e visível */
+#scroll-left {
+  left: 0px; /* Ajustado para garantir visibilidade total */
+}
+
+#scroll-right {
+  right: 0px; /* Ajustado para garantir visibilidade total */
+}
+
+/* Correção do overflow do contêiner */
+.scroll-container {
+  position: relative; /* Garante que as setas sejam posicionadas dentro do contêiner */
+  overflow: visible; /* Permite que as setas sejam visíveis fora do contêiner */
+}
+
+/* Adicionando um efeito de pulsação para maior interatividade */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.scroll-arrow:hover::after {
+  animation: pulse 1s infinite;
+}
+
+/* Estilo para os produtos */
+.products-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll; /* Permite a rolagem horizontal */
+  scroll-behavior: smooth; /* Faz a rolagem ser suave */
+  padding: 10px;
+  padding-left: 0; /* Remove o padding extra do lado esquerdo */
+}
+
+/* Estilo para os produtos - Estilo Cartas Colecionáveis */
+.product-card {
+  background: linear-gradient(135deg, #f2f2f2, #d9d9d9);
+  border: 3px solid #333;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  flex-shrink: 0;
+  width: 200px;
+  padding: 10px;
+  position: relative;
+  overflow: hidden;
+  font-family: "Roboto", sans-serif;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: bounceIn 0.8s ease-out forwards;
+  opacity: 1; /* Garante que os cards estão visíveis desde o início */
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.product-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Fundo temático e bordas */
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.imgur.com/B2iGZVL.png') no-repeat center/cover; /* Fundo decorativo */
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.product-card img {
+  width: 90%;
+  height: 120px;
+  object-fit: cover;
+  border: 2px solid #444;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  z-index: 1;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.product-card img:hover {
+  transform: rotate(-3deg) scale(1.05);
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  margin: 8px 0 5px;
+  color: #222;
+  font-weight: bold;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.product-card h3:hover {
+  color: #6a0dad;
+}
+
+.product-card p {
+  font-size: 0.95rem;
+  color: #555;
+  background: #fff;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  position: relative;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card p:hover {
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.product-card .delete-button {
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 8px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  z-index: 2;
+}
+
+.product-card .delete-button:hover {
+  background-color: #e84141;
+  transform: rotate(15deg) scale(1.2);
+}
+
+/* Adicionando bordas temáticas */
+.product-card .card-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  pointer-events: none;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Estilo da aba de adicionar produtos */
+.add-product {
+  position: absolute; /* Fixa a aba ao lado dos produtos */
+  top: 110px; /* Ajuste para que a aba não fique colada ao topo */
+  right: 20px; /* Fixa a aba na lateral direita da página */
+  flex-basis: 300px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Garante que a aba fique sobre outros conteúdos */
+}
+
+
+.add-product h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  font-size: 1.5rem;
+}
+
+#product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#product-form input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+#product-form input:focus {
+  box-shadow: 0 0 8px #6a0dad;
+  border-color: #6a0dad;
+}
+
+#product-form button {
+  padding: 12px;
+  font-size: 1rem;
+  color: white;
+  background-color: #6a0dad;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#product-form button:hover {
+  background-color: #8e44ad;
+  transform: translateY(-3px);
+}
+
+#clear {
+  padding: 12px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#clear:hover {
+  background-color: #bbb;
+  transform: translateY(-3px);
+}
+
+/* Adicionando sombra sutil e suavidade */
+.add-product:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+/* Estilo da label e ícones */
+label {
+  font-size: 1rem;
+  color: #555;
+  font-weight: bold;
+}
+
+#product-form button::after {
+  content: '→';
+  font-size: 1.2rem;
+  margin-left: 8px;
+  transition: margin-left 0.3s ease;
+}
+
+#product-form button:hover::after {
+  margin-left: 12px;
+}
+
+/* Adicionando sombra e suavidade na aba */
+.add-product {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.add-product:hover {
+  transform: translateY(-5px);
+}
+
+input {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+  border-color: #6a0dad;
+  box-shadow: 0 0 10px #6a0dad;
+}
+
+/* Rodapé */
+footer {
+  background: linear-gradient(135deg, #6a0dad, #8e44ad);
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.3);
+  font-family: 'Arial', sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+footer:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 -8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  animation: fadeIn 1.2s ease-out;
+}
+
+.footer-logo {
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  animation: bounceIn 1s ease;
+}
+
+.footer-logo span {
+  color: #fff;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  animation: slideIn 1.5s ease-out;
+}
+
+.footer-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #f3f3f3;
+  transform: scale(1.1);
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icon {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 12px;
+  background: linear-gradient(135deg, #8e44ad, #580c99);
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.social-icon:hover {
+  background: linear-gradient(135deg, #580c99, #6a0dad);
+  transform: rotate(10deg) scale(1.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  animation: fadeIn 1.2s ease-out;
+}
+
+.footer-bottom p {
+  font-size: 0.9rem;
+  color: #f3f3f3;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.footer-bottom p:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  header {
+    padding: 10px 0;
+    font-size: 1.5rem;
+  }
+
+  main {
+    flex-direction: column; /* Organiza os elementos em coluna */
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .add-product {
+    position: static;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .add-product h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  #product-form input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  #product-form button {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  #clear {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  /* Ajuste para "Meus produtos" e a lista */
+  .product-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .product-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    text-align: center; /* Centraliza o título */
+    
+  }
+
+  /* Estilização da rolagem horizontal */
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto; /* Ativa a rolagem horizontal */
+    gap: 15px; /* Espaçamento entre os itens */
+    padding: 10px 0;
+    scroll-behavior: smooth; /* Faz a rolagem ser suave */
+  }
+
+  .products-container {
+    flex-wrap: nowrap; /* Remove quebra de linha para itens */
+    display: flex;
+    gap: 10px;
+  }
+
+  .product-card {
+    min-width: 200px; /* Define uma largura mínima para cada card */
+    flex: 0 0 auto; /* Impede que os itens estiquem */
+    margin: 0; /* Remove margens desnecessárias */
+  }
+
+  /* Estilização opcional da barra de rolagem */
+  .product-list::-webkit-scrollbar {
+    height: 8px; /* Altura da barra de rolagem */
+  }
+
+  .product-list::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+
+  .product-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  footer {
+    padding: 20px 10px;
+    font-size: 0.8rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .footer-logo {
+    font-size: 1.5rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-social {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-social .social-icon {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+  }
+}
