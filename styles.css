@@ -184,10 +184,10 @@ main {
 /* Estilo para os produtos */
 .products-container {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   overflow-x: scroll; /* Permite a rolagem horizontal */
   scroll-behavior: smooth; /* Faz a rolagem ser suave */
-  padding: 40px;
+  padding: 10px;
   padding-left: 0; /* Remove o padding extra do lado esquerdo */
 }
 
@@ -575,6 +575,11 @@ footer:hover {
 
 
 @media (max-width: 768px) {
+ 
+  .titulo-com-coracoes {
+    content: 'AluraGeek'; /* Substitui o conteúdo */
+    font-size: 1.2em; /* Opcional: ajuste o tamanho do texto */ 
+   }
   body {
     padding: 10px;
   }
