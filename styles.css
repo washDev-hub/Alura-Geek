@@ -184,10 +184,10 @@ main {
 /* Estilo para os produtos */
 .products-container {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   overflow-x: scroll; /* Permite a rolagem horizontal */
   scroll-behavior: smooth; /* Faz a rolagem ser suave */
-  padding: 10px;
+  padding: 40px;
   padding-left: 0; /* Remove o padding extra do lado esquerdo */
 }
 
