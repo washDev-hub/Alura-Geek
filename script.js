@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // Seleciona o formulário e os campos respectivos
-=======
-// Seleciona o formulário e os campos
->>>>>>> 6930ef933413e146d596d4b6c7a9aa921991005b
 const productForm = document.getElementById('product-form');
 const nameInput = document.getElementById('name');
 const priceInput = document.getElementById('price');
@@ -16,11 +12,7 @@ const API_URL = 'http://localhost:3000/products';
 async function saveProduct(event) {
   event.preventDefault();
 
-<<<<<<< HEAD
   // Obtém os dados do formulário completos
-=======
-  // Obtém os dados do formulário
->>>>>>> 6930ef933413e146d596d4b6c7a9aa921991005b
   const name = nameInput.value;
   const price = priceInput.value;
   const image = imageInput.value;
@@ -75,7 +67,6 @@ async function displayProducts() {
         <p class="price">R$ ${product.price}</p>
         <button class="delete-button" onclick="deleteProduct(${product.id})">🗑️</button>
       `;
-<<<<<<< HEAD
       productsContainer.appendChild(productCard);
     });
    // Função de limpar os campos do formulário
@@ -93,11 +84,6 @@ document.getElementById('clear').addEventListener('click', limparFormulario);
 // Associar a função ao botão de limpar
 document.getElementById('clear').addEventListener('click', limparFormulario);
 
-=======
-
-      productsContainer.appendChild(productCard);
-    });
->>>>>>> 6930ef933413e146d596d4b6c7a9aa921991005b
 
     // Verifica se o número de produtos é maior que 4
     if (products.length > 4) {
@@ -165,7 +151,6 @@ productForm.addEventListener('submit', saveProduct);
 
 // Exibe os produtos ao carregar a página
 window.onload = displayProducts;
-<<<<<<< HEAD
 
 
 //Para esconder o Cabeçalho
@@ -189,5 +174,4 @@ window.addEventListener("scroll", function () {
 
   lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Impede o valor negativo
 });
-=======
->>>>>>> 6930ef933413e146d596d4b6c7a9aa921991005b
+
