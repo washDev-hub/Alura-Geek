@@ -77,6 +77,7 @@ Certifique-se de ter instalado:
 ## Hospedagem
 
 A API está hospedada no **Heroku**, garantindo maior disponibilidade e performance para o gerenciamento de produtos.
+link vercel: [http-server](https://vercel.com/washingtons-projects-a4633f98/alura-geek-b8qq/6r6rJAnU2piC8QRASBQM2t96rmqC).
 
 ## Sobre o Projeto
 
